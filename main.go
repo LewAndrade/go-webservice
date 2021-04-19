@@ -1,23 +1,25 @@
 package main
 
 import (
+	"fmt"
 	"github.com/lewandrade/go-webservice/controllers"
 	"net/http"
 )
 
+const port int = 3000
+
+var addr string = fmt.Sprintf("localhost:%v", port)
+
 func main() {
-	//u := models.User{
-	//	ID:        2,
-	//	FirstName: "Lew",
-	//	LastName:  "Andrade",
-	//}
-	//
-	//fmt.Println(u)
-	//port := 3000
-	//_, err := startWebServer(port, 5)
-	//fmt.Println(port, err)
-
 	controllers.RegisterControllers()
-	http.ListenAndServe(":3000", nil)
+	StartServer(addr)
+}
 
+func StartServer(addr string) {
+	fmt.Printf("Starting server on port %v...", port)
+	err := http.ListenAndServe(addr, nil)
+	if err != nil {
+		fmt.Printf("Error: %v", err)
+		return
+	}
 }
